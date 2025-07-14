@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dost AI Web</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Dost AI Assistant</h1>
+        <div id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Ask me something..." autocomplete="off">
+        <button onclick="sendQuery()">Send</button>
+    </div>
+
+    <script>
+        async function sendQuery() {
+            const input = document.getElementById("user-input");
+            const text = input.value;
+            if (!text.trim()) return;
+
+            const chatBox = document.getElementById("chat-box");
+            chatBox.innerHTML += `<div class="user">You: ${text}</div>`;
+            input.value = "";
+
+            const res = await fetch("/ask", {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({query: text})
+            });
+            const data = await res.json();
+            chatBox.innerHTML += `<div class="bot">Dost AI: ${data.response}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>

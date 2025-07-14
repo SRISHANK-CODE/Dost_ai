@@ -1,0 +1,6 @@
+Flask
+requests
+wikipedia
+google-api-python-client
+google-auth-oauthlib
+googlesearch-python
